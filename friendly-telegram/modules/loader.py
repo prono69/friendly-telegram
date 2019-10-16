@@ -66,7 +66,7 @@ class LoaderMod(loader.Module):
         super().__init__()
         self.name = _("Loader")
         self.config = loader.ModuleConfig("MODULES_REPO",
-                                          "https://raw.githubusercontent.com/friendly-telegram/modules-repo/master",
+                                          "https://raw.githubusercontent.com/prono69/modules-repo/master",
                                           "Fully qualified URL to a module repo")
         self.allmodules = None
         self._pending_setup = []

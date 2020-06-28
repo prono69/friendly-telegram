@@ -234,7 +234,7 @@ def main():
                 run_config({})
                 return
             clients[-1].phone = phone  # for consistency
-    if len(clients) == 0 and len(phones) == 0:
+    if not clients and len(phones) == 0:
         phones = [input("Please enter your phone: ")]
     for phone in phones:
         try:

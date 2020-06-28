@@ -39,10 +39,7 @@ def register(cb):  # pylint: disable=C0116
 class StringLoader(SourceLoader):  # pylint: disable=W0223 # False positive, implemented in SourceLoader
     """Load a python module/file from a string"""
     def __init__(self, data, origin):
-        if isinstance(data, str):
-            self.data = data.encode("utf-8")
-        else:
-            self.data = data
+        self.data = data.encode("utf-8") if isinstance(data, str) else data
         self.origin = origin
 
     def get_code(self, fullname):
@@ -128,10 +125,7 @@ class LoaderMod(loader.Module):
 
     async def loadmodcmd(self, message):
         """Loads the module file"""
-        if message.file:
-            msg = message
-        else:
-            msg = (await message.get_reply_message())
+        msg = message if message.file else (await message.get_reply_message())
         if msg is None or msg.media is None:
             args = utils.get_args(message)
             if args:
@@ -160,10 +154,7 @@ class LoaderMod(loader.Module):
             await self.load_module(doc, message)
 
     async def load_module(self, doc, message, name=None, origin="<string>"):
-        if name is None:
-            uid = "__extmod_" + str(uuid.uuid4())
-        else:
-            uid = name
+        uid = "__extmod_" + str(uuid.uuid4()) if name is None else name
         module_name = "friendly-telegram.modules." + uid
         try:
             module = importlib.util.module_from_spec(ModuleSpec(module_name, StringLoader(doc, origin), origin=origin))

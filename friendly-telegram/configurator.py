@@ -63,7 +63,7 @@ class TDialog():
         print()
         print(title)
         print()
-        biggest = max([len(k) for k, d in choices])
+        biggest = max(len(k) for k, d in choices)
         i = 1
         for k, v in choices:
             print(" " + str(i) + ". " + k + (" " * (biggest + 2 - len(k))) + (v.replace("\n", "...\n      ")))
@@ -184,7 +184,9 @@ def api_config():
             return
         string1 = 'HASH = "' + hash_value + '"'
         code, id_value = DIALOG.inputbox("Enter your API ID")
-        if len(id_value) == 0 or not all(it in string.digits for it in id_value):
+        if len(id_value) == 0 or any(
+            it not in string.digits for it in id_value
+        ):
             DIALOG.msgbox("Invalid ID")
             return
         string2 = 'ID = "' + id_value + '"'

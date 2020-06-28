@@ -150,12 +150,12 @@ def _fix_entities(ent, cont_msg, initial=False):
 
 async def answer(message, response, **kwargs):
     """Use this to give the response to a command"""
-    cont_msg = "[continued]\n"
     ret = [message]
     if isinstance(response, str) and not kwargs.get("asfile", False):
         txt, ent = html.parse(response)
         await message.edit(html.unparse(txt[:4096], ent))
         txt = txt[4096:]
+        cont_msg = "[continued]\n"
         _fix_entities(ent, cont_msg, True)
         while len(txt) > 0:
             txt = cont_msg + txt
